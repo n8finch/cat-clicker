@@ -4,5 +4,6 @@ Variations on a theme.
 
 Branches/Versions:
 
-1. Single cat, single click count.
-2. Cat dual! with some objects.
+1. Single Cat Clicker! single click count.
+2. Cat Dual! with some objects.
+3. Cat Clicker Premium! 
