@@ -2,46 +2,104 @@
 
   $(document).ready(function () {
 
-    //Write a Cat class with an incrementing function
+    /**
+     * Create a Cat Class
+     */
 
-    var $cat1NameElm = '#cat-1-name',
-        $cat1CounterElm = '#number-clicks-cat-1',
-        $cat1ImgElem = '#cat-1-pic',
-        $cat2NameElm = '#cat-2-name',
-        $cat2CounterElm = '#number-clicks-cat-2',
-        $cat2ImgElem = '#cat-2-pic';
+    class Cat {
+      constructor(name, img, id, clicks) {
+        this.name = name;
+        this.img = img;
+        this.ID = 'cat-' + id;
+        this.clicks = clicks;
+      }
 
-    var cat1 = {
-      name: 'Nate',
-      count: 0,
-      nameblock: '#cat-1-name',
-      counterblock: 'number-clicks-cat-1'
-    };
+      speak() {
+        console.log(this.name + ' makes a noise.');
+      }
+    }
 
-    var cat2 = {
-      name: 'Megan',
-      count: 0,
-      nameblock: '#cat-1-name',
-      counterblock: 'number-clicks-cat-1'
-    };
+    /**
+     * Get all cat objects into an array
+     */
 
-    console.log(cat1.count);
+    var cats = [];
 
-    $($cat1NameElm).text(cat1.name);
-    $($cat1CounterElm).text(cat1.count);
-    $($cat2NameElm).text(cat2.name);
-    $($cat2CounterElm).text(cat2.count);
+    var numMenuCats = 5;
 
-    $($cat1ImgElem).click(function () {
-      cat1.count += 1;
-      $($cat1CounterElm).text(cat1.count);
+    for (i = 1; i < numMenuCats + 1; i++) {
+
+      var names = ['Bo Jangles', 'Fluffy', 'Bigs & Figs', 'Mittens', 'Frank']
+
+      var name = names[i - 1];
+      var img = 'img/cat' + i + '.jpg';
+
+      cats.push(new Cat(name, img, i, 0));
+    }
+
+    /**
+     * Append each Cat to the
+     */
+    cats.forEach(function (cat) {
+      var menuItem = '';
+      var catName = cat.name;
+      var liString = catName.replace(/ /g, '').toLowerCase();
+
+      menuItem += '<li id="' + cat.ID + '" class="menu-item">';
+      menuItem += '<img class="menu-item-img" src="' + cat.img + '"/>';
+      menuItem += '<span class="menu-item-name"> ' + catName + ' </span>';
+      menuItem += '</li>';
+
+      $('#cat-menu').append(menuItem);
+
     });
 
-    $($cat2ImgElem).click(function () {
-      cat2.count += 1;
-      $($cat2CounterElm).text(cat2.count);
+    /**
+     * Add click listener and add this to the right side box
+     */
+
+    $('.menu-item').click(function () {
+
+      // First, remove the cat flavor if it exists
+      $('.cat-flavor').hide();
+
+      //Get the current ID for the cat
+      var idThis = this.id;
+      idThis = parseInt(idThis.slice(-1));
+      idThis = idThis - 1;
+
+      //Get the current Cat from the cats array
+      var currentCat = cats[idThis];
+
+      var catFlavor = '';
+
+      //Create the element to append
+      catFlavor += '<div class="cat-flavor">';
+      catFlavor += '<h2>' + currentCat.name + '</h2>'
+      catFlavor += '<h3>Click Count: <span class="click-count">' + currentCat.clicks + '</span></h3>';
+      catFlavor += '<img id="current-flavor-img" src=' + currentCat.img + '/>';
+      catFlavor += '</div>';
+
+      $('#intro-text').append(catFlavor);
+
+      /**
+       * On clicking the cat pic, show and store the new click count
+       */
+
+      $('#current-flavor-img').click(function () {
+
+        //TODO fix the click counts after the switch!!! The count is stored in the cats array, and can be referenced, but the clicks on new cat flavors aren't showing or recording.
+
+        currentCat.clicks += 1;
+        
+        $('.click-count').text(currentCat.clicks);
+        console.log(currentCat.clicks);
+      });
+
+      console.log(currentCat);
     });
 
-  });
+
+  }); //end document.ready(function)...
 
 }(jQuery));
