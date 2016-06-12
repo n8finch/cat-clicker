@@ -1,6 +1,6 @@
 # Cat Clicker
 
-Variations on a theme.
+A fun project using Javascript Design patters, refactoriing and variations on a theme.
 
 Branches/Versions:
 
